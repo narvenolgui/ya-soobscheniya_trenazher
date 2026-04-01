@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Тренажёр «Я-сообщения»</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 48px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            padding: 20px 30px 30px;
+            transition: all 0.3s;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        h1 small {
+            font-size: 0.9rem;
+            background: #eef2ff;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-weight: normal;
+            color: #2a5298;
+        }
+
+        .formula-card {
+            background: #e9f0ff;
+            border-left: 8px solid #ff9800;
+            padding: 12px 20px;
+            border-radius: 32px;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            color: #2c3e66;
+        }
+
+        .formula-card span {
+            background: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            display: inline-block;
+            margin: 5px 3px;
+        }
+
+        .situation-box {
+            background: #f8f9ff;
+            border-radius: 48px;
+            padding: 25px 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #cddcff;
+        }
+
+        .situation-text {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #0b2b4f;
+            background: #fff;
+            padding: 20px;
+            border-radius: 40px;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        .options-area {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 25px 0 15px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #bdd4ff;
+            border-radius: 60px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            text-align: left;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            color: #1e3c72;
+            line-height: 1.4;
+        }
+
+        .option-btn:hover {
+            background: #eef3ff;
+            border-color: #2a5298;
+            transform: scale(1.01);
+        }
+
+        .option-btn.correct-highlight {
+            background: #c8e6d9;
+            border-color: #2e7d32;
+            color: #1b5e20;
+        }
+
+        .option-btn.wrong-highlight {
+            background: #ffcdd2;
+            border-color: #c62828;
+            color: #b71c1c;
+            text-decoration: line-through;
+        }
+
+        .feedback {
+            background: #fff9e0;
+            border-radius: 28px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            border-left: 8px solid #ffb74d;
+        }
+
+        .score-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            border-top: 2px dashed #cbd5e1;
+            padding-top: 20px;
+        }
+
+        .score {
+            font-size: 1.6rem;
+            font-weight: bold;
+            background: #2a5298;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 40px;
+        }
+
+        .next-btn {
+            background: #ff9800;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 0 #b45f06;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #b45f06;
+        }
+
+        .next-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .restart-btn {
+            background: #e0e7ff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: #1e3c72;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #5a6e8a;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
+
+        @media (max-width: 700px) {
+            .game-container { padding: 15px; }
+            .situation-text { font-size: 1.2rem; }
+            .option-btn { font-size: 0.9rem; padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <h1>
+        🗣️ Тренажёр «Я-сообщение»
+        <small>формула бесконфликтного общения</small>
+    </h1>
+    <div class="formula-card">
+        📌 Правило: <span>«Когда ты...</span> <span>я чувствую...</span> <span>потому что...</span> <span>мне бы хотелось...»</span>
+    </div>
+
+    <div class="situation-box">
+        <div style="font-weight: bold; color: #1e3c72;">🔹 СИТУАЦИЯ 🔹</div>
+        <div class="situation-text" id="situationText">Загрузка...</div>
+    </div>
+
+    <div class="options-area" id="optionsContainer"></div>
+
+    <div id="feedbackBox" class="feedback" style="display: none;"></div>
+
+    <div class="score-area">
+        <div class="score">⭐ Счёт: <span id="scoreValue">0</span> / <span id="totalQuestions">0</span></div>
+        <div>
+            <button class="restart-btn" id="restartBtn">🔄 Начать заново</button>
+            <button class="next-btn" id="nextBtn" disabled>➡️ Следующая ситуация</button>
+        </div>
+    </div>
+    <footer>
+        © narven_olgui | Учимся говорить о чувствах без обвинений
+    </footer>
+</div>
+
+<script>
+    // Банк ситуаций и вариантов ответов (правильный всегда соответствует формуле Я-сообщения)
+    const questions = [
+        {
+            situation: "Твой друг без спроса взял твой любимый рюкзак и испачкал его. Ты злишься. Что скажешь?",
+            options: [
+                "Ты что, идиот? Зачем трогал мои вещи!",
+                "Когда ты берёшь мои вещи без разрешения, я чувствую раздражение, потому что мне важно моё личное пространство. Мне бы хотелось, чтобы ты спрашивал перед этим.",
+                "Ладно, ничего страшного, забери вообще.",
+                "Если ты ещё раз возьмёшь мои вещи, я тебя ударю."
+            ],
+            correctIndex: 1
+        },
+        {
+            situation: "На уроке одноклассник громко смеётся над твоим ответом, всем вокруг смешно, а тебе обидно.",
+            options: [
+                "Заткнись, придурок!",
+                "Когда ты смеёшься надо мной перед всеми, я чувствую стыд и злость, потому что я старался ответить правильно. Мне бы хотелось, чтобы ты высказывал своё мнение уважительно.",
+                "Плевать, смейся дальше, мне всё равно.",
+                "Я пожалуюсь учительнице, и тебе влетит."
+            ],
+            correctIndex: 1
+        },
+        {
+            situation: "Старший брат (или друг) постоянно включает громкую музыку, когда ты делаешь уроки, на просьбы сделать тише не реагирует.",
+            options: [
+                "Ты глухой? Выключи сейчас же!",
+                "Когда ты включаешь музыку на полную, пока я занимаюсь, я чувствую усталость и злость, потому что мне сложно сосредоточиться. Мне бы хотелось, чтобы мы договорились о времени для громкой музыки.",
+                "Пойду в другую комнату, всё равно ты меня не слышишь.",
+                "Сделаю ещё громче, посмотрим, кто кого."
+            ],
+            correctIndex: 1
+        },
+        {
+            situation: "Ты снял прикольное видео, выложил в сеть, а в комментариях кто-то пишет гадости про твою внешность.",
+            options: [
+                "Сам ты страшный, пошёл вон!",
+                "Когда я читаю такие комментарии, я чувствую обиду, потому что я делился тем, что мне нравится. Мне бы хотелось получать конструктивную критику или просто добрые слова.",
+                "Удалю видео, больше ничего не буду выкладывать.",
+                "Пусть пишут, мне всё равно, но в душе очень больно."
+            ],
+            correctIndex: 1
+        },
+        {
+            situation: "Учитель на весь класс сказал, что ты плохо подготовился, хотя ты учил, просто волновался.",
+            options: [
+                "Вы несправедливы, я учил! (кричит)",
+                "Когда меня оценивают так жёстко перед всеми, я чувствую стыд и обиду, потому что я правда старался. Мне бы хотелось обсудить это наедине и получить шанс исправиться.",
+                "Промолчу, но весь день буду злиться.",
+                "Учитель дурак, я больше ничего не буду учить."
+            ],
+            correctIndex: 1
+        },
+        {
+            situation: "Твои друзья зовут тебя залезть на крышу поезда (опасный зацепинг), называют трусом, если откажешься. Ты не хочешь рисковать жизнью.",
+            options: [
+                "Ладно, пойду, чтобы не считали трусом.",
+                "Когда вы меня уговариваете на опасные вещи и называете трусом, я чувствую давление и злость, потому что моя безопасность важнее чужого мнения. Мне бы хотелось, чтобы вы уважали мой отказ и мы нашли другое, безопасное приключение.",
+                "Отвалите, я сам решаю.",
+                "Вы дураки, я с вами больше не дружу."
+            ],
+            correctIndex: 1
+        }
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let answered = false;   // уже выбран ответ в текущем вопросе
+    let totalQuestions = questions.length;
+
+    // DOM элементы
+    const situationEl = document.getElementById('situationText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackBox = document.getElementById('feedbackBox');
+    const scoreSpan = document.getElementById('scoreValue');
+    const totalSpan = document.getElementById('totalQuestions');
+    const nextBtn = document.getElementById('nextBtn');
+    const restartBtn = document.getElementById('restartBtn');
+
+    function updateScoreUI() {
+        scoreSpan.textContent = score;
+        totalSpan.textContent = totalQuestions;
+    }
+
+    // Отображение текущего вопроса
+    function renderCurrentQuestion() {
+        // очистить подсветки, сбросить стили кнопок
+        const q = questions[currentIndex];
+        situationEl.textContent = q.situation;
+
+        optionsContainer.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = opt;
+            btn.dataset.index = idx;
+            btn.addEventListener('click', () => handleAnswer(idx, btn));
+            optionsContainer.appendChild(btn);
+        });
+
+        // скрыть фидбек до ответа
+        feedbackBox.style.display = 'none';
+        feedbackBox.innerHTML = '';
+        nextBtn.disabled = true;
+        answered = false;
+
+        // снимаем любые старые подсветки
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.classList.remove('correct-highlight', 'wrong-highlight');
+        });
+    }
+
+    function handleAnswer(selectedIdx, btnElement) {
+        if (answered) return; // уже ответили
+
+        const currentQ = questions[currentIndex];
+        const isCorrect = (selectedIdx === currentQ.correctIndex);
+        if (isCorrect) {
+            score++;
+            updateScoreUI();
+        }
+
+        // подсвечиваем все кнопки: зелёным – правильный вариант, красным – ошибочный выбранный (если неправильно)
+        const allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach((btn, idx) => {
+            if (idx === currentQ.correctIndex) {
+                btn.classList.add('correct-highlight');
+            }
+            if (idx === selectedIdx && idx !== currentQ.correctIndex) {
+                btn.classList.add('wrong-highlight');
+            }
+        });
+
+        // показываем обратную связь
+        let feedbackHtml = '';
+        if (isCorrect) {
+            feedbackHtml = `✅ <strong>Верно!</strong> Ты использовал(а) Я-сообщение, говоришь о своих чувствах, не обвиняя.<br>🎯 «${currentQ.options[currentQ.correctIndex]}»`;
+        } else {
+            feedbackHtml = `❌ <strong>Не совсем.</strong> Лучше сказать о своих чувствах, не обвиняя.<br>📌 Правильное Я-сообщение:<br>«${currentQ.options[currentQ.correctIndex]}»`;
+        }
+        feedbackBox.innerHTML = feedbackHtml;
+        feedbackBox.style.display = 'block';
+
+        answered = true;
+        nextBtn.disabled = false;
+    }
+
+    function nextQuestion() {
+        if (!answered) return;
+        if (currentIndex + 1 < totalQuestions) {
+            currentIndex++;
+            renderCurrentQuestion();
+        } else {
+            // игра завершена
+            situationEl.textContent = "🏆 Отлично! Ты завершил(а) все ситуации! 🏆";
+            optionsContainer.innerHTML = '<div style="text-align:center; padding:20px;">Молодец! Теперь ты лучше знаешь, как строить Я-сообщения.</div>';
+            feedbackBox.style.display = 'none';
+            nextBtn.disabled = true;
+            // показываем финальную статистику
+            const finalMessage = document.createElement('div');
+            finalMessage.className = 'feedback';
+            finalMessage.style.marginTop = '15px';
+            finalMessage.innerHTML = `🎉 Твой результат: ${score} из ${totalQuestions}. 🎉<br>Помни: «Я-сообщение» помогает сохранить отношения и выразить чувства без агрессии.`;
+            if (!document.getElementById('finalScoreMsg')) {
+                finalMessage.id = 'finalScoreMsg';
+                optionsContainer.after(finalMessage);
+            }
+        }
+    }
+
+    function restartGame() {
+        currentIndex = 0;
+        score = 0;
+        answered = false;
+        updateScoreUI();
+        // убрать финальное сообщение, если было
+        const finalDiv = document.getElementById('finalScoreMsg');
+        if (finalDiv) finalDiv.remove();
+        renderCurrentQuestion();
+    }
+
+    // инициализация
+    updateScoreUI();
+    renderCurrentQuestion();
+
+    nextBtn.addEventListener('click', nextQuestion);
+    restartBtn.addEventListener('click', restartGame);
+</script>
+</body>
+</html>
