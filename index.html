@@ -3,375 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Тренажёр «Я-сообщения» — учимся говорить без обид</title>
+    <title>Тренажёр «Я-сообщение» – 15 новых ситуаций</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #e0f2e9 0%, #c2e0d0 100%);
             min-height: 100vh;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0;
-            padding: 20px;
         }
 
-        .game-container {
-            max-width: 1100px;
+        .game-card {
+            max-width: 1200px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 48px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            background: #f6fef9;
+            border-radius: 64px;
+            box-shadow: 0 20px 35px rgba(50, 70, 50, 0.15), 0 0 0 1px #d4f0e2 inset;
             overflow: hidden;
-            padding: 20px 30px 30px;
-            transition: all 0.3s;
+            padding: 25px 30px 35px;
+            transition: all 0.2s;
         }
 
         h1 {
             text-align: center;
-            color: #1e3c72;
             font-size: 2rem;
-            margin-top: 0;
-            margin-bottom: 10px;
+            color: #2b6e4f;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
             flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
         h1 small {
-            font-size: 0.9rem;
-            background: #eef2ff;
-            padding: 5px 12px;
-            border-radius: 40px;
+            font-size: 0.85rem;
+            background: #e0f5ea;
+            padding: 6px 16px;
+            border-radius: 60px;
             font-weight: normal;
-            color: #2a5298;
+            color: #1f5e43;
         }
 
-        .formula-card {
-            background: #e9f0ff;
-            border-left: 8px solid #ff9800;
+        .badge {
+            background: #e2f3ea;
+            border-radius: 40px;
             padding: 12px 20px;
-            border-radius: 32px;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
             text-align: center;
-            color: #2c3e66;
+            margin-bottom: 25px;
+            border-left: 6px solid #6fbf8f;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2a6749;
         }
 
-        .formula-card span {
+        .badge strong {
             background: white;
             padding: 4px 12px;
-            border-radius: 40px;
-            display: inline-block;
-            margin: 5px 3px;
+            border-radius: 32px;
+            margin: 0 4px;
+            font-family: monospace;
         }
 
-        .situation-box {
-            background: #f8f9ff;
+        .situation-panel {
+            background: #f1faf5;
             border-radius: 48px;
-            padding: 25px 20px;
+            padding: 20px 25px;
             margin: 20px 0;
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            border: 1px solid #cddcff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #c6e3d4;
         }
 
         .situation-text {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #0b2b4f;
-            background: #fff;
+            color: #1a4f38;
+            background: #ffffff;
             padding: 20px;
             border-radius: 40px;
-            margin: 10px 0;
             line-height: 1.4;
         }
 
-        .options-area {
+        .options-grid {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             margin: 25px 0 15px;
         }
 
         .option-btn {
             background: white;
-            border: 2px solid #bdd4ff;
-            border-radius: 60px;
+            border: 2px solid #cbe5da;
+            border-radius: 100px;
             padding: 14px 20px;
             font-size: 1rem;
-            text-align: left;
             font-weight: 500;
-            transition: all 0.2s;
+            text-align: left;
+            color: #1a3e2f;
             cursor: pointer;
-            color: #1e3c72;
+            transition: all 0.2s ease;
             line-height: 1.4;
         }
 
         .option-btn:hover {
-            background: #eef3ff;
-            border-color: #2a5298;
+            background: #e6f7ef;
+            border-color: #6fbf8f;
             transform: scale(1.01);
         }
 
-        .option-btn.correct-highlight {
-            background: #c8e6d9;
-            border-color: #2e7d32;
-            color: #1b5e20;
+        .option-btn.correct {
+            background: #c7f0da;
+            border-color: #328f5e;
+            color: #115c3a;
         }
 
-        .option-btn.wrong-highlight {
-            background: #ffcdd2;
-            border-color: #c62828;
-            color: #b71c1c;
+        .option-btn.wrong {
+            background: #ffeded;
+            border-color: #e0a5a5;
+            color: #a14646;
             text-decoration: line-through;
         }
 
-        .feedback {
-            background: #fff9e0;
+        .feedback-area {
+            background: #e0f5e9;
             border-radius: 28px;
-            padding: 15px 20px;
+            padding: 18px 22px;
             margin: 20px 0;
-            font-size: 1.1rem;
-            border-left: 8px solid #ffb74d;
+            font-size: 1rem;
+            border-left: 10px solid #6fbf8f;
         }
 
-        .score-area {
+        .score-bar {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
             flex-wrap: wrap;
             gap: 15px;
             margin-top: 20px;
-            border-top: 2px dashed #cbd5e1;
-            padding-top: 20px;
+            border-top: 2px dashed #cbe5da;
+            padding-top: 22px;
         }
 
-        .score {
-            font-size: 1.6rem;
+        .score-box {
+            background: #6fbf8f;
+            padding: 8px 24px;
+            border-radius: 60px;
             font-weight: bold;
-            background: #2a5298;
+            font-size: 1.6rem;
             color: white;
-            padding: 6px 20px;
-            border-radius: 40px;
+            text-shadow: 1px 1px 0 #2c6e4a;
         }
 
-        .next-btn {
-            background: #ff9800;
+        .btn-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-next {
+            background: #7fc99e;
             border: none;
-            padding: 12px 28px;
+            padding: 12px 32px;
             font-size: 1.2rem;
             font-weight: bold;
             border-radius: 60px;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 0 #b45f06;
+            transition: 0.1s linear;
+            box-shadow: 0 4px 0 #488a64;
         }
 
-        .next-btn:active {
+        .btn-next:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 0 #b45f06;
+            box-shadow: 0 2px 0 #488a64;
         }
 
-        .next-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
+        .btn-next:disabled {
+            background: #bddacb;
             box-shadow: none;
             transform: none;
+            cursor: not-allowed;
         }
 
-        .restart-btn {
-            background: #e0e7ff;
+        .btn-restart {
+            background: #e0efea;
             border: none;
             padding: 8px 20px;
-            border-radius: 40px;
+            border-radius: 50px;
             font-weight: bold;
-            color: #1e3c72;
+            color: #2a6749;
             cursor: pointer;
         }
 
         footer {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 32px;
             font-size: 0.8rem;
-            color: #5a6e8a;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 15px;
+            color: #5d8b73;
+            border-top: 1px solid #d4f0e2;
+            padding-top: 18px;
         }
 
         @media (max-width: 700px) {
-            .game-container { padding: 15px; }
+            .game-card { padding: 15px; }
             .situation-text { font-size: 1.2rem; }
             .option-btn { font-size: 0.9rem; padding: 12px 16px; }
         }
     </style>
 </head>
 <body>
-<div class="game-container">
+<div class="game-card">
     <h1>
-        🗣️ Тренажёр «Я-сообщение»
-        <small>говори о чувствах, не обвиняй</small>
+        🌱 Тренажёр «Я-сообщение»
+        <small>15 новых ситуаций – выбирай осознанно</small>
     </h1>
-    <div class="formula-card">
-        📌 Формула: <span>«Когда ты…</span> <span>я чувствую…</span> <span>потому что…</span> <span>мне бы хотелось…»</span>
+    <div class="badge">
+        📢 Формула: <strong>«Когда ты…»</strong> + <strong>«я чувствую…»</strong> + <strong>«потому что…»</strong> + <strong>«мне бы хотелось…»</strong>
     </div>
 
-    <div class="situation-box">
-        <div style="font-weight: bold; color: #1e3c72;">🔹 СИТУАЦИЯ 🔹</div>
+    <div class="situation-panel">
+        <div style="font-weight: 600; color: #2b6e4f;">🔻 СИТУАЦИЯ 🔻</div>
         <div class="situation-text" id="situationText">Загрузка...</div>
     </div>
 
-    <div class="options-area" id="optionsContainer"></div>
+    <div class="options-grid" id="optionsContainer"></div>
+    <div id="feedbackBox" class="feedback-area" style="display: none;"></div>
 
-    <div id="feedbackBox" class="feedback" style="display: none;"></div>
-
-    <div class="score-area">
-        <div class="score">⭐ Счёт: <span id="scoreValue">0</span> / <span id="totalQuestions">0</span></div>
-        <div>
-            <button class="restart-btn" id="restartBtn">🔄 Начать заново</button>
-            <button class="next-btn" id="nextBtn" disabled>➡️ Следующая ситуация</button>
+    <div class="score-bar">
+        <div class="score-box">✨ Счёт: <span id="scoreValue">0</span> / <span id="totalQuestions">0</span></div>
+        <div class="btn-group">
+            <button class="btn-restart" id="restartBtn">🔄 Пройти заново</button>
+            <button class="btn-next" id="nextBtn" disabled>➡️ Следующая ситуация</button>
         </div>
     </div>
     <footer>
-        © narven_olgui | Тренажёр для отработки «Я-сообщений» в групповой работе
+        🧡 Авторская разработка — narven_olgui | Говори о чувствах, не обвиняй
     </footer>
 </div>
 
 <script>
-    // 12 ситуаций с вариантами (правильный ответ — всегда я-сообщение)
-    const rawQuestions = [
-        {
-            situation: "Друг без спроса взял твою новую куртку и порвал её. Ты внутри кипишь от злости.",
-            options: [
-                "Ты идиот! Зачем трогал мои вещи?!",
-                "Когда ты берёшь мои вещи без спроса и портишь их, я чувствую злость и обиду, потому что куртка была мне дорога. Мне бы хотелось, чтобы ты спрашивал разрешения и был аккуратнее.",
-                "Ладно, ничего страшного, не переживай (но внутри обида).",
-                "Я больше никогда с тобой не дружу, ты мне всё испортил!"
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "На уроке физкультуры тебя постоянно не выбирают в команду. Тебе обидно и одиноко.",
-            options: [
-                "Вы все козлы, не буду с вами играть!",
-                "Когда меня не берут в игру, я чувствую себя ненужным и грустным, потому что я тоже хочу быть частью команды. Мне бы хотелось, чтобы вы дали мне шанс.",
-                "Пойду посижу в сторонке, всё равно вы меня не видите.",
-                "Плевать, я и сам не хочу играть с вами."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Старший брат (или друг) постоянно громко слушает музыку, когда ты делаешь домашку. На просьбы сделать тише – не реагирует.",
-            options: [
-                "Ты глухой?! Выключи сейчас же!",
-                "Когда ты включаешь музыку так громко, пока я занимаюсь, я чувствую раздражение и усталость, потому что мне сложно сосредоточиться. Мне бы хотелось договориться о времени, когда можно слушать громко.",
-                "Ничего, потерплю, он старше.",
-                "Я пожалуюсь родителям, тебе влетит."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Одноклассники смеются над твоим ответом у доски. Тебе стыдно и больно.",
-            options: [
-                "Заткнитесь, вы сами ничего не знаете!",
-                "Когда вы смеётесь надо мной перед всем классом, я чувствую унижение и страх, потому что я старался ответить правильно. Мне бы хотелось, чтобы вы уважали мои попытки.",
-                "Уйду с урока, мне всё равно.",
-                "Смейтесь, я привык(ла)."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Ты выложил своё творчество в сеть, а в комментариях кто-то пишет грубость про твою внешность.",
-            options: [
-                "Сам ты страшный, иди в бан!",
-                "Когда я читаю такие комментарии, я чувствую обиду и злость, потому что я делился тем, что мне дорого. Мне бы хотелось получать честную, но добрую обратную связь.",
-                "Удалю всё, больше не буду ничего выкладывать.",
-                "Плевать, пусть пишут, мне всё равно."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Учитель на весь класс сказал, что ты бездарь, потому что не смог решить задачу. Ты старался, но волновался.",
-            options: [
-                "Вы несправедливы! Я учил! (кричит)",
-                "Когда меня так оценивают при всех, я чувствую стыд и обиду, потому что я правда старался. Мне бы хотелось обсудить это наедине и получить шанс исправиться.",
-                "Промолчу, но весь день буду злиться.",
-                "Учитель дурак, больше ничего не буду учить."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Друзья уговаривают тебя залезть на крышу поезда (зацепинг), называют трусом. Ты не хочешь рисковать жизнью.",
-            options: [
-                "Ладно, пойду, чтобы не считали трусом.",
-                "Когда вы меня уговариваете на опасные вещи и называете трусом, я чувствую давление и злость, потому что моя безопасность важнее чужого мнения. Мне бы хотелось, чтобы вы уважали мой отказ и мы нашли другое, безопасное приключение.",
-                "Отвалите, я сам решаю.",
-                "Вы дураки, я с вами больше не дружу."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Твой парень/девушка постоянно смотрит в телефон, когда вы вместе. Тебе кажется, что тебя игнорируют.",
-            options: [
-                "Ты меня вообще не любишь, только телефон и видишь!",
-                "Когда ты смотришь в телефон, пока мы вместе, я чувствую одиночество и ревность, потому что мне важно наше общение. Мне бы хотелось, чтобы мы договаривались о времени без гаджетов.",
-                "Ладно, я тоже сяду в телефон.",
-                "Ничего не скажу, просто обижусь."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Ты опоздал на встречу с другом из-за пробок, а он накричал на тебя при всех.",
-            options: [
-                "Ты что орёшь? Сам вечно опаздываешь!",
-                "Когда ты кричишь на меня при людях, я чувствую стыд и обиду, потому что я правда не хотел опаздывать. Мне бы хотелось, чтобы мы обсудили это спокойно, без свидетелей.",
-                "Извини, я больше не буду опаздывать.",
-                "Ну и ладно, не нужна мне такая дружба."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Родители сравнивают тебя с отличником из класса, говорят, что ты мог бы лучше учиться. Тебе обидно.",
-            options: [
-                "Да отстаньте вы со своим отличником!",
-                "Когда вы меня сравниваете с другими, я чувствую себя неудачником и злость, потому что я стараюсь по-своему. Мне бы хотелось, чтобы вы замечали мои успехи, а не только недостатки.",
-                "Молчу, уйду в свою комнату.",
-                "Вы меня не любите, я всё понял."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Ты участвуешь в школьном конкурсе, а группа одноклассников громко обсуждает, что ты точно проиграешь. Тебе слышно.",
-            options: [
-                "Заткнитесь, завистники!",
-                "Когда я слышу, как вы говорите, что я проиграю, я чувствую неуверенность и обиду, потому что я очень стараюсь. Мне бы хотелось, чтобы вы меня поддерживали, даже если не верите в успех.",
-                "Ничего, я докажу.",
-                "Пойду и снимусь с конкурса."
-            ],
-            correctIndex: 1
-        },
-        {
-            situation: "Твой друг постоянно перебивает тебя, не даёт закончить мысль. Тебе надоело.",
-            options: [
-                "Дай договорить, какой ты невоспитанный!",
-                "Когда ты меня перебиваешь, я чувствую раздражение и усталость, потому что мне важно, чтобы меня выслушали. Мне бы хотелось, чтобы мы говорили по очереди.",
-                "Ничего, перебью и я.",
-                "Ладно, молчи, всё равно тебе не интересно."
-            ],
-            correctIndex: 1
-        }
+    // 15 абсолютно новых ситуаций, каждая с 4 длинными вариантами. Правильный ответ (Я-сообщение) — индекс 1.
+    const rawSituations = [
+        { situation: "Ты опубликовал фото в сторис, а лучший друг выложил скриншот с твоей неловкой миной в общий чат. Все смеются.",
+          options: [
+              "Ты что, идиот? Удали сейчас же, это не смешно, а просто жестоко!",
+              "Когда ты выкладываешь мои неловкие фото без спроса, я чувствую стыд и предательство, потому что я тебе доверяю. Мне бы хотелось, чтобы ты спрашивал разрешения перед тем, как публиковать что-то обо мне.",
+              "Ладно, пусть висит, я всё равно уже привык, что меня высмеивают.",
+              "Я тоже найду твою позорную фотку и выложу, посмотрим, как тебе понравится."
+          ] },
+        { situation: "На перемене учительница сделала тебе замечание за разговор, хотя на самом деле болтал другой человек. Ты не виноват.",
+          options: [
+              "Вы что, слепые? Не я болтал, а вон тот, за задней партой!",
+              "Когда меня наказывают за то, что я не делал, я чувствую обиду и злость, потому что это несправедливо. Мне бы хотелось, чтобы вы сначала разобрались, кто виноват.",
+              "Промолчу, спорить бесполезно, вы всё равно не слушаете.",
+              "Вы всегда ко мне придираетесь, потому что я вам не нравлюсь."
+          ] },
+        { situation: "Твоя группа в соцсетях готовит секретный подарок для одноклассника, а ты случайно узнал об этом. Тебя не позвали участвовать.",
+          options: [
+              "Вы что, козлы? Почему меня не позвали? Я тоже хочу быть частью команды!",
+              "Когда я узнаю, что меня не включили в общее дело, я чувствую себя изгоем и обиду, потому что мне важно быть с вами заодно. Мне бы хотелось, чтобы в следующий раз меня тоже приглашали.",
+              "Ничего, я сам сделаю подарок отдельный, и пусть все увидят, какой я молодец.",
+              "Плевать, я вообще не хочу с вами связываться, делайте что хотите."
+          ] },
+        { situation: "В спортзале во время игры тебя постоянно толкают локтями, но судья этого не замечает. Тебе больно и обидно.",
+          options: [
+              "Вы что, специально? Сейчас я вам покажу, как толкаться!",
+              "Когда меня толкают во время игры, а судья не вмешивается, я чувствую боль и злость, потому что это нарушает правила честной игры. Мне бы хотелось, чтобы вы играли аккуратнее, а судья обращал внимание.",
+              "Ничего, стерплю, не хочу быть ябедой.",
+              "Уйду с площадки, играйте сами, раз вам всё равно."
+          ] },
+        { situation: "Ты попросил родителей купить новый телефон, а они отказали, сказав, что у тебя и так хороший. Тебе обидно, так как у всех уже новее.",
+          options: [
+              "Вы меня не любите! У всех уже новые, а я хожу как лох.",
+              "Когда вы отказываете в покупке телефона, я чувствую обиду и зависть к другим, потому что мне тоже хочется быть не хуже. Мне бы хотелось обсудить, как я могу заработать или накопить на него сам.",
+              "Ладно, я больше никогда ничего не буду просить, буду молчать.",
+              "Вы просто жадные, не хотите тратить на меня деньги."
+          ] },
+        { situation: "Ты участвуешь в онлайн-игре, а тиммейт постоянно кричит на тебя в голосовой чат, обвиняет в проигрыше.",
+          options: [
+              "Сам дурак, заткнись и играй лучше, а не ори!",
+              "Когда ты кричишь на меня в игре, я чувствую злость и напряжение, потому что я стараюсь играть хорошо. Мне бы хотелось, чтобы мы обсуждали ошибки спокойно, без оскорблений.",
+              "Ничего, я просто выключу звук и буду играть дальше.",
+              "Я выйду из игры и больше с тобой никогда не сяду."
+          ] },
+        { situation: "Твоя младшая сестра (или брат) без спроса залезла в твою комнату и разрисовала твои школьные тетради. Ты в ярости.",
+          options: [
+              "Ты что, маленький вандал? Сейчас я тебя накажу!",
+              "Когда ты портишь мои вещи без разрешения, я чувствую ярость и беспомощность, потому что мне теперь нужно всё переписывать. Мне бы хотелось, чтобы ты никогда не трогал мои школьные принадлежности.",
+              "Ничего, родители купят новые, не буду скандалить.",
+              "Я спрячу все свои вещи под замок, а с тобой больше не буду разговаривать."
+          ] },
+        { situation: "В школьном проекте тебя поставили в пару с ленивым учеником, который ничего не делает. Вся работа на тебе. Ты устал и зол.",
+          options: [
+              "Ты вообще собираешься работать или так и будешь на мне ездить?",
+              "Когда ты не участвуешь в общем проекте, я чувствую усталость и несправедливость, потому что я делаю двойную работу. Мне бы хотелось, чтобы мы распределили задачи поровну.",
+              "Ладно, сделаю всё сам, лишь бы получить оценку, а потом просто больше не буду с тобой работать.",
+              "Я пожалуюсь учителю, и тебе снизят баллы."
+          ] },
+        { situation: "Ты договорился встретиться с друзьями, но они без предупреждения сменили место, забыли тебе сказать, и ты час просидел в пустом парке.",
+          options: [
+              "Вы что, издеваетесь? Я вас больше никогда не жду!",
+              "Когда вы меняете место встречи и не сообщаете мне, я чувствую обиду и злость, потому что я потратил время впустую. Мне бы хотелось, чтобы вы заранее писали мне в личку об изменениях.",
+              "Ничего страшного, бывает, я просто посижу один.",
+              "Я тоже в следующий раз не предупрежу, пусть помучаются."
+          ] },
+        { situation: "Ты сдал важный экзамен лучше, чем твой друг, а он теперь говорит всем, что ты списал. Это неправда.",
+          options: [
+              "Ты просто завидуешь, потому что сам тупой! Не смей врать!",
+              "Когда ты распускаешь слухи, что я списал, я чувствую обиду и злость, потому что я честно готовился. Мне бы хотелось, чтобы ты прекратил это и мы поговорили по-честному.",
+              "Плевать, пусть говорят, кто знает правду, тот знает.",
+              "Я перестану с тобой общаться и всем расскажу, какой ты завистник."
+          ] },
+        { situation: "Ты пытаешься поговорить с родителями о своих переживаниях, а они говорят: «Не выдумывай, у тебя всё хорошо». Тебе больно.",
+          options: [
+              "Вы меня вообще не слышите! Вечно отмахиваетесь, как от маленького!",
+              "Когда вы говорите, что у меня всё хорошо, а я чувствую иначе, я ощущаю одиночество и боль, потому что мне нужна ваша поддержка. Мне бы хотелось, чтобы вы просто выслушали, не оценивая.",
+              "Ничего, я больше не буду с вами делиться, буду держать всё в себе.",
+              "Вы не умеете слушать, вот почему я вам ничего не рассказываю."
+          ] },
+        { situation: "В школьном буфете ты взял булочку, а продавщица сказала, что ты уже брал сегодня и не заплатил. Это ошибка, ты платил.",
+          options: [
+              "Вы меня с кем-то путаете! Я честно заплатил, не надо меня позорить!",
+              "Когда меня обвиняют в том, чего я не делал, я чувствую стыд и злость, потому что я всегда плачу. Мне бы хотелось, чтобы вы проверили камеры или спросили у других продавцов.",
+              "Ладно, заплачу ещё раз, лишь бы отвязались.",
+              "Я больше никогда не буду у вас покупать и всем расскажу, какой здесь бардак."
+          ] },
+        { situation: "Ты записал крутое видео для школьного конкурса, а одноклассник сказал, что оно скучное и никому не интересно. Тебе обидно.",
+          options: [
+              "Сам ты скучный! Ничего не понимаешь в творчестве!",
+              "Когда ты критикуешь моё видео так жёстко, я чувствую обиду и неуверенность, потому что я вложил в него душу. Мне бы хотелось услышать конструктивные замечания, а не просто «скучно».",
+              "Ладно, я удалю видео, раз оно никому не нужно.",
+              "Ты просто завидуешь, потому что сам ничего не умеешь."
+          ] },
+        { situation: "Твоя девушка/парень ревнует тебя ко всем друзьям противоположного пола, постоянно устраивает сцены. Ты устал от этого.",
+          options: [
+              "Ты меня задушишь своей ревностью! Прекрати, это невыносимо!",
+              "Когда ты ревнуешь меня к друзьям, я чувствую усталость и обиду, потому что я верен тебе и не даю поводов. Мне бы хотелось, чтобы мы доверяли друг другу больше и говорили о своих чувствах без скандалов.",
+              "Ничего, потерплю, это от любви, наверное.",
+              "Если ты не перестанешь, я уйду, потому что так жить невозможно."
+          ] },
+        { situation: "Ты пришёл в новую компанию, а один из парней начал подкалывать тебя при всех, проверяя «на слабо». Тебе неуютно.",
+          options: [
+              "Слушай, ты, клоун, не испытывай моё терпение, а то пожалеешь.",
+              "Когда ты подкалываешь меня при всех и проверяешь «на слабо», я чувствую дискомфорт и злость, потому что я не хочу ничего доказывать в такой форме. Мне бы хотелось, чтобы мы общались уважительно, без унижений.",
+              "Ничего, я потерплю, не хочу показаться слабаком в новой компании.",
+              "Плевать, я просто уйду, мне такая компания не нужна."
+          ] }
     ];
 
-    // Функция для случайного перемешивания массива (Фишер-Йетс)
-    function shuffleArray(arr) {
+    // Перемешивание вариантов
+    function shuffle(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -379,24 +368,23 @@
         return arr;
     }
 
-    // Подготовка вопросов: для каждого создаём копию вариантов и перемешиваем,
-    // запоминая правильный индекс в новом массиве
-    const questions = rawQuestions.map(q => {
-        const shuffledOptions = shuffleArray([...q.options]);
-        const newCorrectIndex = shuffledOptions.findIndex(opt => opt === q.options[q.correctIndex]);
+    // Подготовка вопросов: перемешиваем варианты, запоминаем новый индекс правильного (в исходных данных правильный под индексом 1)
+    const questions = rawSituations.map(sit => {
+        const originalCorrect = sit.options[1];
+        const shuffledOptions = shuffle([...sit.options]);
+        const newCorrectIdx = shuffledOptions.findIndex(opt => opt === originalCorrect);
         return {
-            situation: q.situation,
+            situation: sit.situation,
             options: shuffledOptions,
-            correctIndex: newCorrectIndex
+            correctIndex: newCorrectIdx
         };
     });
 
     let currentIndex = 0;
     let score = 0;
     let answered = false;
-    const totalQuestions = questions.length;
+    const total = questions.length;
 
-    // DOM элементы
     const situationEl = document.getElementById('situationText');
     const optionsContainer = document.getElementById('optionsContainer');
     const feedbackBox = document.getElementById('feedbackBox');
@@ -405,87 +393,78 @@
     const nextBtn = document.getElementById('nextBtn');
     const restartBtn = document.getElementById('restartBtn');
 
-    function updateScoreUI() {
+    function updateUI() {
         scoreSpan.textContent = score;
-        totalSpan.textContent = totalQuestions;
+        totalSpan.textContent = total;
     }
 
-    function renderCurrentQuestion() {
+    function renderCurrent() {
         const q = questions[currentIndex];
         situationEl.textContent = q.situation;
-
         optionsContainer.innerHTML = '';
         q.options.forEach((opt, idx) => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.textContent = opt;
-            btn.dataset.index = idx;
             btn.addEventListener('click', () => handleAnswer(idx, btn));
             optionsContainer.appendChild(btn);
         });
-
         feedbackBox.style.display = 'none';
         feedbackBox.innerHTML = '';
         nextBtn.disabled = true;
         answered = false;
-        // удаляем старые подсветки
         document.querySelectorAll('.option-btn').forEach(btn => {
-            btn.classList.remove('correct-highlight', 'wrong-highlight');
+            btn.classList.remove('correct', 'wrong');
         });
     }
 
-    function handleAnswer(selectedIdx, btnElement) {
+    function handleAnswer(selectedIdx) {
         if (answered) return;
-
-        const currentQ = questions[currentIndex];
-        const isCorrect = (selectedIdx === currentQ.correctIndex);
+        const q = questions[currentIndex];
+        const isCorrect = (selectedIdx === q.correctIndex);
         if (isCorrect) {
             score++;
-            updateScoreUI();
+            updateUI();
         }
-
         const allBtns = document.querySelectorAll('.option-btn');
         allBtns.forEach((btn, idx) => {
-            if (idx === currentQ.correctIndex) {
-                btn.classList.add('correct-highlight');
+            if (idx === q.correctIndex) {
+                btn.classList.add('correct');
             }
-            if (idx === selectedIdx && idx !== currentQ.correctIndex) {
-                btn.classList.add('wrong-highlight');
+            if (idx === selectedIdx && idx !== q.correctIndex) {
+                btn.classList.add('wrong');
             }
         });
-
         let feedbackHtml = '';
         if (isCorrect) {
-            feedbackHtml = `✅ <strong>Верно!</strong> Ты использовал(а) Я-сообщение — говоришь о чувствах, не обвиняя.<br>🎯 «${currentQ.options[currentQ.correctIndex]}»`;
+            feedbackHtml = `✅ <strong>Верно!</strong> Ты выбрал(а) Я-сообщение — говоришь о своих чувствах, не обвиняя.<br>🎯 <em>«${q.options[q.correctIndex]}»</em>`;
         } else {
-            feedbackHtml = `❌ <strong>Не совсем.</strong> Лучше сказать о своих чувствах, не обвиняя.<br>📌 Правильное Я-сообщение:<br>«${currentQ.options[currentQ.correctIndex]}»`;
+            feedbackHtml = `❌ <strong>Не совсем.</strong> Лучше сказать о своих чувствах, не обвиняя.<br>📌 Правильное Я-сообщение:<br><em>«${q.options[q.correctIndex]}»</em>`;
         }
         feedbackBox.innerHTML = feedbackHtml;
         feedbackBox.style.display = 'block';
-
         answered = true;
         nextBtn.disabled = false;
     }
 
     function nextQuestion() {
         if (!answered) return;
-        if (currentIndex + 1 < totalQuestions) {
+        if (currentIndex + 1 < total) {
             currentIndex++;
-            renderCurrentQuestion();
+            renderCurrent();
         } else {
-            // игра окончена
-            situationEl.textContent = "🏆 Отлично! Ты справился(лась) со всеми ситуациями! 🏆";
-            optionsContainer.innerHTML = '<div style="text-align:center; padding:20px;">Молодец! Теперь ты лучше знаешь, как строить Я-сообщения.</div>';
+            situationEl.textContent = "🏆 ПОЗДРАВЛЯЮ! 🏆 Ты прошёл(ла) все 15 новых ситуаций!";
+            optionsContainer.innerHTML = '<div style="text-align:center; padding:25px; background:#e2f3ea; border-radius:40px;">🎉 Отличная работа! Ты стал(а) лучше понимать «Я-сообщения». 🎉<br>Помни: говорить о чувствах — это сила, а не слабость.</div>';
             feedbackBox.style.display = 'none';
             nextBtn.disabled = true;
-            const finalDiv = document.getElementById('finalScoreMsg');
+            const finalDiv = document.getElementById('finalMsg');
             if (!finalDiv) {
-                const finalMessage = document.createElement('div');
-                finalMessage.id = 'finalScoreMsg';
-                finalMessage.className = 'feedback';
-                finalMessage.style.marginTop = '15px';
-                finalMessage.innerHTML = `🎉 Твой результат: ${score} из ${totalQuestions}. 🎉<br>Помни: «Я-сообщение» помогает сохранить отношения и выразить чувства без агрессии.`;
-                optionsContainer.after(finalMessage);
+                const fin = document.createElement('div');
+                fin.id = 'finalMsg';
+                fin.className = 'feedback-area';
+                fin.style.marginTop = '20px';
+                fin.innerHTML = `⭐ Твой результат: ${score} из ${total}. ⭐<br>Используй «Я-сообщения» в жизни — они помогают сохранять отношения и уважать себя.`;
+                optionsContainer.after(fin);
             }
         }
     }
@@ -494,16 +473,14 @@
         currentIndex = 0;
         score = 0;
         answered = false;
-        updateScoreUI();
-        const finalDiv = document.getElementById('finalScoreMsg');
+        updateUI();
+        const finalDiv = document.getElementById('finalMsg');
         if (finalDiv) finalDiv.remove();
-        renderCurrentQuestion();
+        renderCurrent();
     }
 
-    // инициализация
-    updateScoreUI();
-    renderCurrentQuestion();
-
+    updateUI();
+    renderCurrent();
     nextBtn.addEventListener('click', nextQuestion);
     restartBtn.addEventListener('click', restartGame);
 </script>
